@@ -1,7 +1,9 @@
 package com.example.books;
 
-import android.os.AsyncTask;
+
+import android.net.Uri;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,15 +14,21 @@ import java.util.Scanner;
 public class ApiUtil {
     private ApiUtil(){}
 
-    public static final String BASE__API_URL =
+    public static final String BASE_API_URL =
             "https://www.googleapis.com/books/v1/volumes";
+    public static final String QUERY_PARAMETER_KEY = "q";
+    public static final String KEY = "key=";
+    public static final String API_KEY = "AIzaSyBLGxRN44kOgLSYV7X_46jcWrXGPSg-fVs";
 
     public static URL buildUrl(String title){
-        String fullUrl = BASE__API_URL + "?q=" + title;
 
         URL url = null;
+        Uri uri = Uri.parse(BASE_API_URL).buildUpon()
+                .appendQueryParameter(QUERY_PARAMETER_KEY, title)
+                .appendQueryParameter(KEY, API_KEY)
+                .build();
         try{
-            url = new URL(fullUrl);
+            url = new URL(uri.toString());
         }catch (Exception e){
             e.printStackTrace();
         }
