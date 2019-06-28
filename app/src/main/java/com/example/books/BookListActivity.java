@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class BookListActivity extends AppCompatActivity {
     private ProgressBar mLoadingProgress;
@@ -18,6 +20,7 @@ public class BookListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+
         mLoadingProgress = (ProgressBar) findViewById(R.id.pb_loading);
         try {
             URL bookUrl = ApiUtil.buildUrl("cooking");
@@ -58,13 +61,22 @@ public class BookListActivity extends AppCompatActivity {
                 tvResult.setVisibility(View.VISIBLE);
                 tvError.setVisibility(View.INVISIBLE);
             }
-            tvResult.setText(result);
+
+            ArrayList<Book> books = ApiUtil.getBooksFromJson(result);
+            String resultString = "";
+            for (Book book : books) {
+                resultString = resultString + book.title + "\n" +
+                        book.publishedDate + "\n\n";
+            }
+
+            tvResult.setText(resultString);
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             mLoadingProgress.setVisibility(View.VISIBLE);
+            Toast.makeText(BookListActivity.this, "Loading...please wait", Toast.LENGTH_SHORT).show();
         }
     }
 }
