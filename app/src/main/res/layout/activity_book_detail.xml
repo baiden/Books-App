@@ -17,15 +17,16 @@
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookDetail">
+    tools:context=".BookDetail"
+    android:fillViewport="true">
 
     <ImageView
         android:id="@+id/imgCover"
-        android:layout_width="143dp"
-        android:layout_height="155dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@{Book.thumbnail}"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:imageUrl="@{Book.thumbnail}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
 
@@ -36,8 +37,8 @@
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/standard_margin"
-        android:textSize="36sp"
         android:text="@{Book.title}"
+        android:textSize="36sp"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,19 +60,19 @@
 
     <TextView
         android:id="@+id/tvAuthors"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin"
+        android:text="@{Book.authors}"
         android:textSize="18sp"
         android:textColor="@color/colorAccent"
-        android:text="@{Book.authors}"
         app:layout_constraintStart_toEndOf="@+id/imgCover"
         app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
 
     <TextView
         android:id="@+id/tvPublisher"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin"
@@ -92,8 +93,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPublisher" />
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_margin"
         android:textSize="16sp"
