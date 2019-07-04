@@ -25,7 +25,7 @@
         android:layout_height="155dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/book_open"
+        android:src="@{Book.thumbnail}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
 
@@ -38,6 +38,7 @@
         android:layout_marginEnd="@dimen/standard_margin"
         android:textSize="36sp"
         android:text="@{Book.title}"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,6 +51,7 @@
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/standard_margin"
         android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
         android:text="@{Book.subTitle}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +64,7 @@
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin"
         android:textSize="18sp"
+        android:textColor="@color/colorAccent"
         android:text="@{Book.authors}"
         app:layout_constraintStart_toEndOf="@+id/imgCover"
         app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
