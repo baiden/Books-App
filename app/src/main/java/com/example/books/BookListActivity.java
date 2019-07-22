@@ -1,5 +1,6 @@
 package com.example.books;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class BookListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class BookListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private ProgressBar mLoadingProgress;
     private RecyclerView rvBooks;
 
@@ -39,8 +40,7 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
             URL bookUrl = ApiUtil.buildUrl("cooking");
             new BooksQueryTask().execute(bookUrl);
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.d("error", e.getMessage());
         }
 
@@ -56,8 +56,20 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_advanced_search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
-        try{
+        try {
             URL bookUrl = ApiUtil.buildUrl(query);
             new BooksQueryTask().execute(bookUrl);
         } catch (Exception e) {
@@ -79,8 +91,7 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
             String result = null;
             try {
                 result = ApiUtil.getJson(searchURL);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Log.e("Error", e.getMessage());
             }
             return result;
@@ -94,8 +105,7 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
             if (result == null) {
                 rvBooks.setVisibility(View.INVISIBLE);
                 tvError.setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 rvBooks.setVisibility(View.VISIBLE);
                 tvError.setVisibility(View.INVISIBLE);
             }
