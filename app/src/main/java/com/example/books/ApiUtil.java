@@ -23,11 +23,14 @@ public class ApiUtil {
     public static final String QUERY_PARAMETER_KEY = "q";
     public static final String KEY = "key=";
     public static final String API_KEY = "API goes here";
+<<<<<<< HEAD
     public static final String TITLE = "intitle:";
     public static final String AUTHOR = "inauthor:";
     public static final String PUBLISHER = "inpublisher:";
     public static final String ISBN = "isbn:";
 
+=======
+>>>>>>> ad238e08f5b8f9d31c6ad611d0b96d6406106e48
 
     public static URL buildUrl(String title) {
 
