@@ -20,10 +20,12 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class BookListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private ProgressBar mLoadingProgress;
     private RecyclerView rvBooks;
+    URL bookUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,16 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
         rvBooks.setLayoutManager(booksLayoutManager);
 
         mLoadingProgress = (ProgressBar) findViewById(R.id.pb_loading);
+        Intent intent = getIntent();
+        String query = intent.getStringExtra("query");
+
         try {
-            URL bookUrl = ApiUtil.buildUrl("cooking");
+            if (query == null  || query.isEmpty()) {
+                bookUrl = ApiUtil.buildUrl("cooking");
+            }
+            else {
+                bookUrl = new URL(query);
+            }
             new BooksQueryTask().execute(bookUrl);
 
         } catch (Exception e) {
@@ -52,6 +62,12 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
+        ArrayList<String> recentList = SpUtil.getQueryList(getApplicationContext());
+        int itemNum = recentList.size();
+        MenuItem recentMenu;
+        for (int i = 0; i<itemNum; i++) {
+            recentMenu = menu.add(Menu.NONE, i, Menu.NONE, recentList.get(i));
+        }
         return true;
     }
 
@@ -63,6 +79,24 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
                 startActivity(intent);
                 return true;
             default:
+                int position = item.getItemId() + 1 ;
+                String preferenceName = SpUtil.QUERY + String.valueOf(position);
+                String query = SpUtil.getPreferenceString(getApplicationContext(), preferenceName);
+                String[] prefParams = query.split("\\,");
+                String[] queryParams = new String[4];
+
+                for (int i=0; i<prefParams.length;i++) {
+                    queryParams[i] = prefParams[i];
+                }
+
+
+                bookUrl = ApiUtil.buildUrl(
+                        (queryParams[0] == null)?"" : queryParams[0],
+                        (queryParams[1] == null)?"" : queryParams[1],
+                        (queryParams[2] == null)?"" : queryParams[2],
+                        (queryParams[3] == null)?"" : queryParams[3]
+                );
+                new BooksQueryTask().execute(bookUrl);
                 return super.onOptionsItemSelected(item);
         }
     }

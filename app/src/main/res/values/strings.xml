@@ -9,4 +9,5 @@
     <string name="hint_author">Insert Author</string>
     <string name="hint_Publisher">Insert Publisher</string>
     <string name="hint_Isbn">Insert ISBN</string>
+    <string name="no_search_data">Please insert valid search terms</string>
 </resources>
