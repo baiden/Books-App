@@ -3,6 +3,7 @@ package com.example.books;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +55,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         public void bind (Book book) {
             tvTitle.setText(book.title);
             String authors="";
-            tvAuthors.setText(book.authors);
-            tvDate.setText(book.publishedDate);
-            tvPublisher.setText(book.publisher);
+            tvAuthors.setText(book.authors.get());
+            tvDate.setText(book.publishedDate.get());
+            tvPublisher.setText(book.publisher.get());
 
         }
 
@@ -65,7 +66,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         public void onClick(View view) {
             int position = getAdapterPosition();
             Book selectedBook = books.get(position);
-
+            Log.d("Click", String.valueOf(position));
+            //gets the book from the arrayList
             Intent intent = new Intent(view.getContext(), BookDetail.class);
             intent.putExtra("Book", selectedBook);
             view.getContext().startActivity(intent);
